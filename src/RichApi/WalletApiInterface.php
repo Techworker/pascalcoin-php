@@ -18,11 +18,13 @@ use Techworker\PascalCoin\Type\PublicKey;
 use Techworker\PascalCoin\Type\Simple\PublicKeyInterface;
 
 /**
- * Interface NodeApiInterface.
+ * Interface WalletApiInterface
  */
 interface WalletApiInterface
 {
     /**
+     * Gets the list of accounts in the nodes wallet.
+     *
      * @throws \Techworker\PascalCoin\RPC\ConnectionException
      * @throws \Techworker\PascalCoin\RPC\ErrorException
      */
@@ -31,6 +33,8 @@ interface WalletApiInterface
                              int $max = 100): array;
 
     /**
+     * Gets the number of accounts in the nodes wallet.
+     *
      * @throws \Techworker\PascalCoin\RPC\ConnectionException
      * @throws \Techworker\PascalCoin\RPC\ErrorException
      */
@@ -39,6 +43,8 @@ interface WalletApiInterface
                                  int $max = 100): int;
 
     /**
+     * Gets the list of public keys in the nodes wallet.
+     *
      * @throws \Techworker\PascalCoin\RPC\ConnectionException
      * @throws \Techworker\PascalCoin\RPC\ErrorException
      *
@@ -48,14 +54,22 @@ interface WalletApiInterface
                                int $max = 100): array;
 
     /**
+     * Gets the public key in the wallet.
+     *
      * @throws \Techworker\PascalCoin\RPC\ConnectionException
      * @throws \Techworker\PascalCoin\RPC\ErrorException
+     *
+     * @return PublicKey
      */
     public function publicKey(PublicKeyInterface $publicKey): PublicKey;
 
     /**
+     * Gets the balance of the wallet.
+     *
      * @throws \Techworker\PascalCoin\RPC\ConnectionException
      * @throws \Techworker\PascalCoin\RPC\ErrorException
+     *
+     * @return PascalCoin
      */
     public function balance(PublicKeyInterface $publicKey) : PascalCoin;
 }

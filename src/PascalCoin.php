@@ -157,10 +157,12 @@ class PascalCoin
     public function getRawApi(EndPoint ...$endPoints): RawApi
     {
         if (count($endPoints) === 0) {
-            return $this->rawApi->setEndpoints(...$this->endPoints);
+            $this->rawApi->setEndpoints(...$this->endPoints);
+        } else {
+            $this->rawApi->setEndpoints(...$endPoints);
         }
 
-        return $this->rawApi->setEndpoints(...$endPoints);
+        return $this->rawApi;
     }
 
     /**
@@ -173,9 +175,11 @@ class PascalCoin
     public function getRichApi(EndPoint ...$endPoints): RichApi
     {
         if (count($endPoints) === 0) {
-            return $this->richApi->setEndpoints(...$this->endPoints);
+            $this->richApi->setEndpoints(...$this->endPoints);
+        } else {
+            $this->richApi->setEndpoints(...$endPoints);
         }
 
-        return $this->richApi->setEndpoints(...$endPoints);
+        return $this->richApi;
     }
 }

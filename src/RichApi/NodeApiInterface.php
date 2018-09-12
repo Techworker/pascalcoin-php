@@ -19,6 +19,8 @@ namespace Techworker\PascalCoin\RichApi;
 interface NodeApiInterface
 {
     /**
+     * Adds one or more nodes to connect.
+     *
      * @param string ...$nodes
      *
      * @throws \Techworker\PascalCoin\RPC\ConnectionException
@@ -29,6 +31,8 @@ interface NodeApiInterface
     public function addNodes(string ...$nodes): int;
 
     /**
+     * Starts the connections.
+     *
      * @throws \Techworker\PascalCoin\RPC\ConnectionException
      * @throws \Techworker\PascalCoin\RPC\ErrorException
      * @return bool
@@ -36,6 +40,8 @@ interface NodeApiInterface
     public function start(): bool;
 
     /**
+     * Stops establishing connections.
+     *
      * @throws \Techworker\PascalCoin\RPC\ConnectionException
      * @throws \Techworker\PascalCoin\RPC\ErrorException
      * @return bool
@@ -43,6 +49,8 @@ interface NodeApiInterface
     public function stop(): bool;
 
     /**
+     * Restarts connections.
+     *
      * @throws \Techworker\PascalCoin\RPC\ConnectionException
      * @throws \Techworker\PascalCoin\RPC\ErrorException
      * @return bool
@@ -50,6 +58,8 @@ interface NodeApiInterface
     public function restart(): bool;
 
     /**
+     * gets a list of connections.
+     *
      * @throws \Techworker\PascalCoin\RPC\ConnectionException
      * @throws \Techworker\PascalCoin\RPC\ErrorException
      * @return array

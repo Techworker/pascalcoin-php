@@ -126,6 +126,14 @@ class RawApi implements RawApiInterface
     /**
      * {@inheritdoc}
      */
+    public function getConnections()
+    {
+        return $this->send('getconnections');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getWalletAccounts(string $encPubKey = null,
                                       string $b58PubKey = null,
                                       int $start = 0,
@@ -841,14 +849,6 @@ class RawApi implements RawApiInterface
             'payload' => $payload,
             'pwds' => $pwds,
         ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getConnections()
-    {
-        return $this->send('getconnections');
     }
 
     /**

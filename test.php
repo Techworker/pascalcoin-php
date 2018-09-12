@@ -23,8 +23,11 @@ require_once __DIR__.'/vendor/autoload.php';
 
 $rpcClient = new Curl();
 $rawApiClient = new RawApi($rpcClient);
-$richApiClient = new RichApi(new RichApi\NodeApi($rawApiClient), new RichApi\WalletApi($rawApiClient));
-
+$richApiClient = new RichApi(
+    new RichApi\NodeApi($rawApiClient),
+    new RichApi\WalletApi($rawApiClient),
+    new RichApi\AccountApi($rawApiClient)
+);
 $pasc = new PascalCoin($rawApiClient, $richApiClient, [new EndPoint('10.0.2.2')]);
 
 
@@ -32,6 +35,9 @@ $pasc = new PascalCoin($rawApiClient, $richApiClient, [new EndPoint('10.0.2.2')]
 //print_r($pasc->getRichApi()->node()->connections());
 //print_r($pasc->getRichApi()->node()->restart());
 
+
+print_r($pasc->getRichApi()->account()->find(1));
+exit;
 
 
 $publicKeys = $pasc->getRichApi()->wallet()->publicKeys();

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Techworker\PascalCoin;
 
+use Techworker\PascalCoin\RichApi\AccountApiInterface;
 use Techworker\PascalCoin\RichApi\NodeApiInterface;
 use Techworker\PascalCoin\RichApi\WalletApiInterface;
 
@@ -22,11 +23,13 @@ class RichApi implements RichApiInterface
 
     protected $nodeApi;
     protected $walletApi;
+    protected $accountApi;
 
-    public function __construct(NodeApiInterface $nodeApi, WalletApiInterface $walletApi)
+    public function __construct(NodeApiInterface $nodeApi, WalletApiInterface $walletApi, AccountApiInterface $accountApi)
     {
         $this->nodeApi = $nodeApi;
         $this->walletApi = $walletApi;
+        $this->accountApi = $accountApi;
     }
 
     public function node(EndPoint ...$endPoints): NodeApiInterface
@@ -46,5 +49,15 @@ class RichApi implements RichApiInterface
         }
 
         return $this->walletApi->setEndpoints(...$endPoints);
+    }
+
+    public function account(EndPoint ...$endPoints): AccountApiInterface
+    {
+        if (count($endPoints) === 0) {
+            $endPoints = $this->endPoints;
+        }
+
+        $this->accountApi->setEndpoints(...$endPoints);
+        return $this->accountApi;
     }
 }
