@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace Techworker\PascalCoin\RichApi;
 
 use Techworker\CryptoCurrency\Currencies\PascalCoin;
+use Techworker\PascalCoin\Type\Account;
 use Techworker\PascalCoin\Type\PublicKey;
+use Techworker\PascalCoin\Type\Simple\AccountNumber;
 use Techworker\PascalCoin\Type\Simple\PublicKeyInterface;
 
 /**
@@ -27,16 +29,26 @@ interface WalletApiInterface
      *
      * @throws \Techworker\PascalCoin\RPC\ConnectionException
      * @throws \Techworker\PascalCoin\RPC\ErrorException
+     *
+     * @param PublicKeyInterface $publicKey
+     * @param int $start
+     * @param int $max
+     * @return array
      */
-    public function accounts(PublicKeyInterface $publicKey,
-                             int $start = 0,
-                             int $max = 100): array;
+    public function listAccounts(PublicKeyInterface $publicKey = null,
+                                 int $start = 0,
+                                 int $max = 100): array;
 
     /**
      * Gets the number of accounts in the nodes wallet.
      *
      * @throws \Techworker\PascalCoin\RPC\ConnectionException
      * @throws \Techworker\PascalCoin\RPC\ErrorException
+     *
+     * @param PublicKeyInterface $publicKey
+     * @param int $start
+     * @param int $max
+     * @return int
      */
     public function countAccounts(PublicKeyInterface $publicKey,
                                  int $start = 0,
@@ -48,9 +60,11 @@ interface WalletApiInterface
      * @throws \Techworker\PascalCoin\RPC\ConnectionException
      * @throws \Techworker\PascalCoin\RPC\ErrorException
      *
+     * @param int $start
+     * @param int $max
      * @return PublicKey[]
      */
-    public function publicKeys(int $start = 0,
+    public function listPublicKeys(int $start = 0,
                                int $max = 100): array;
 
     /**
@@ -59,9 +73,10 @@ interface WalletApiInterface
      * @throws \Techworker\PascalCoin\RPC\ConnectionException
      * @throws \Techworker\PascalCoin\RPC\ErrorException
      *
+     * @param PublicKeyInterface $publicKey
      * @return PublicKey
      */
-    public function publicKey(PublicKeyInterface $publicKey): PublicKey;
+    public function findPublicKey(PublicKeyInterface $publicKey): PublicKey;
 
     /**
      * Gets the balance of the wallet.
@@ -69,7 +84,8 @@ interface WalletApiInterface
      * @throws \Techworker\PascalCoin\RPC\ConnectionException
      * @throws \Techworker\PascalCoin\RPC\ErrorException
      *
+     * @param PublicKeyInterface $publicKey
      * @return PascalCoin
      */
-    public function balance(PublicKeyInterface $publicKey) : PascalCoin;
+    public function getBalance(PublicKeyInterface $publicKey) : PascalCoin;
 }

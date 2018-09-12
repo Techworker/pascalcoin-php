@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Techworker\PascalCoin\RichApi;
 
 use Techworker\PascalCoin\Type\Connection;
+use Techworker\PascalCoin\Type\Status;
 
 /**
  * Class NodeApi
@@ -25,7 +26,7 @@ class NodeApi extends AbstractRichApi implements NodeApiInterface
      */
     public function addNodes(string ...$nodes): int
     {
-        $this->rawApi->addNode($nodes);
+        return $this->rawApi->addNode($nodes);
     }
 
     /**
@@ -58,10 +59,17 @@ class NodeApi extends AbstractRichApi implements NodeApiInterface
     /**
      * @inheritdoc
      */
-    public function connections(): array
+    public function listConnections(): array
     {
         return array_map(function (array $connection) {
             return new Connection($connection);
         }, $this->rawApi->getConnections());
     }
+
+    public function status(): Status
+    {
+        return new Status($this->rawApi->nodeStatus());
+    }
+
+
 }

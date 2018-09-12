@@ -20,8 +20,6 @@ namespace Techworker\PascalCoin;
  */
 class RawApi implements RawApiInterface
 {
-    use HasEndpointsTrait;
-
     /**
      * The rpc implementation.
      *
@@ -30,13 +28,22 @@ class RawApi implements RawApiInterface
     protected $rpcClient;
 
     /**
+     * The node endpoint.
+     *
+     * @var EndPoint
+     */
+    protected $endPoint;
+
+    /**
      * RawApi constructor.
      *
      * @param AbstractRPCClient $rpcClient
+     * @param EndPoint $endPoints
      */
-    public function __construct(AbstractRPCClient $rpcClient)
+    public function __construct(AbstractRPCClient $rpcClient, EndPoint $endPoint)
     {
         $this->rpcClient = $rpcClient;
+        $this->endPoint = $endPoint;
     }
 
     /**
@@ -85,7 +92,7 @@ class RawApi implements RawApiInterface
     protected function send(string $method, array $params = [])
     {
         return $this->rpcClient->send(
-            $method, $this->prepareParams($params), $this->getEndPoint()
+            $method, $this->prepareParams($params), $this->endPoint
         );
     }
 

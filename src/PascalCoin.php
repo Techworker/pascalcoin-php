@@ -127,59 +127,34 @@ class PascalCoin
     private $richApi;
 
     /**
-     * The list of remote nodes.
-     *
-     * @var EndPoint[]
-     */
-    private $endPoints;
-
-    /**
      * PascalCoin constructor.
      *
-     * @param RawApi $rawApi
-     * @param RichApi $richApi
-     * @param array $endPoints
+     * @param RawApiInterface $rawApi
+     * @param RichApiInterface $richApi
      */
-    public function __construct(RawApi $rawApi, RichApi $richApi, array $endPoints = [])
+    public function __construct(RawApiInterface $rawApi, RichApiInterface $richApi)
     {
         $this->rawApi = $rawApi;
         $this->richApi = $richApi;
-        $this->endPoints = $endPoints;
     }
 
     /**
-     * Gets the raw API implementation for the given endpoints.
+     * Gets the raw API implementation.
      *
-     * @param EndPoint ...$endPoints
-     *
-     * @return RawApi
+     * @return RawApiInterface
      */
-    public function getRawApi(EndPoint ...$endPoints): RawApi
+    public function getRawApi(): RawApiInterface
     {
-        if (count($endPoints) === 0) {
-            $this->rawApi->setEndpoints(...$this->endPoints);
-        } else {
-            $this->rawApi->setEndpoints(...$endPoints);
-        }
-
         return $this->rawApi;
     }
 
     /**
      * Gets the rich API implementation.
      *
-     * @param EndPoint ...$endPoints
-     *
-     * @return RichApi
+     * @return RichApiInterface
      */
-    public function getRichApi(EndPoint ...$endPoints): RichApi
+    public function getRichApi(): RichApiInterface
     {
-        if (count($endPoints) === 0) {
-            $this->richApi->setEndpoints(...$this->endPoints);
-        } else {
-            $this->richApi->setEndpoints(...$endPoints);
-        }
-
         return $this->richApi;
     }
 }

@@ -13,17 +13,15 @@ declare(strict_types=1);
 
 namespace Techworker\PascalCoin\RichApi;
 
-use Techworker\PascalCoin\HasEndpointsTrait;
 use Techworker\PascalCoin\RawApiInterface;
+use Techworker\PascalCoin\Type\Account;
 use Techworker\PascalCoin\Type\PublicKey;
-use Techworker\PascalCoin\Type\RpcValueInterface;
+use Techworker\PascalCoin\Type\Simple\AccountNumber;
 use Techworker\PascalCoin\Type\Simple\EncodedPublicKey;
 use Techworker\PascalCoin\Type\Simple\PublicKeyInterface;
 
 abstract class AbstractRichApi
 {
-    use HasEndpointsTrait;
-
     /**
      * The raw api.
      *
@@ -57,5 +55,27 @@ abstract class AbstractRichApi
         }
 
         return null;
+    }
+
+    /**
+     * Extracts the account number from the given parameter.
+     *
+     * @param int|Account|AccountNumber $account
+     * @throws \InvalidArgumentException
+     * @return int
+     */
+    protected function getAccountValue($account) {
+
+        if(\is_int($account)) {
+            $accountNumber = $account;
+        } else if($account instanceof AccountNumber) {
+            $accountNumber = $account->getValue();
+        } else if($account instanceof Account) {
+            $accountNumber = $account->getValue();
+        } else {
+            throw new \InvalidArgumentException('Invalid account given: ' . $account);
+        }
+
+        return $accountNumber;
     }
 }

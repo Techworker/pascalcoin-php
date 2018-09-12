@@ -3,18 +3,23 @@
 namespace Techworker\PascalCoin\RichApi;
 
 use Techworker\PascalCoin\Helper;
+use Techworker\PascalCoin\Type\Account;
 use Techworker\PascalCoin\Type\PublicKey;
+use Techworker\PascalCoin\Type\Simple\AccountNumber;
 use Techworker\PascalCoin\Type\Simple\Base58PublicKey;
 use Techworker\PascalCoin\Type\Simple\EncodedPublicKey;
 use Techworker\PascalCoin\Type\Simple\PublicKeyInterface;
 use Techworker\CryptoCurrency\Currencies\PascalCoin as PascalCoinCurrency;
 
-class WalletApi extends AbstractRichApi implements WalletApiInterface
+/**
+ * Class WalletApi
+ *
+ * Contains method related to the wallet in the node.
+ */
+class WalletApi extends AbstractRichApi
+    implements WalletApiInterface
 {
-    /**
-     * @inheritdoc
-     */
-    public function accounts(PublicKeyInterface $publicKey,
+    public function listAccounts(PublicKeyInterface $publicKey = null,
                              int $start = 0,
                              int $max = 100): array
     {
@@ -26,7 +31,7 @@ class WalletApi extends AbstractRichApi implements WalletApiInterface
         );
     }
 
-    public function countAccounts(PublicKeyInterface $publicKey,
+    public function countAccounts(PublicKeyInterface $publicKey = null,
                                   int $start = 0,
                                   int $max = 100): int
     {
@@ -38,7 +43,7 @@ class WalletApi extends AbstractRichApi implements WalletApiInterface
         );
     }
 
-    public function publicKeys(int $start = 0,
+    public function listPublicKeys(int $start = 0,
                                int $max = 100): array
     {
         return Helper::toArrayOfInstance(
@@ -47,7 +52,7 @@ class WalletApi extends AbstractRichApi implements WalletApiInterface
         );
     }
 
-    public function publicKey(PublicKeyInterface $publicKey): PublicKey
+    public function findPublicKey(PublicKeyInterface $publicKey): PublicKey
     {
         return new PublicKey($this->rawApi->getWalletPubKey(
             $this->getPublicKeyValue($publicKey, EncodedPublicKey::class),
@@ -55,7 +60,7 @@ class WalletApi extends AbstractRichApi implements WalletApiInterface
         ));
     }
 
-    public function balance(PublicKeyInterface $publicKey): PascalCoinCurrency
+    public function getBalance(PublicKeyInterface $publicKey): PascalCoinCurrency
     {
         return new PascalCoinCurrency($this->rawApi->getWalletCoins(
             $this->getPublicKeyValue($publicKey, EncodedPublicKey::class),

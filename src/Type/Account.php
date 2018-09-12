@@ -19,9 +19,10 @@ declare(strict_types=1);
 
 namespace Techworker\PascalCoin\Type;
 
+use Techworker\PascalCoin\PascalCoin;
 use Techworker\PascalCoin\Type\Simple\AccountNumber;
 use Techworker\PascalCoin\Type\Simple\EncodedPublicKey;
-use Techworker\PascalCoin\Type\Simple\PascalCurrency;
+use Techworker\CryptoCurrency\Currencies\PascalCoin as PascalCoinCurrency;
 
 /**
  * Class Account.
@@ -40,7 +41,7 @@ class Account extends AccountNumber
     /**
      * The balance of the account.
      *
-     * @var PascalCurrency
+     * @var PascalCoinCurrency
      */
     protected $balance;
 
@@ -75,7 +76,7 @@ class Account extends AccountNumber
     /**
      * The price of the account in case its listed.
      *
-     * @var PascalCurrency
+     * @var PascalCoinCurrency
      */
     protected $price;
 
@@ -133,11 +134,11 @@ class Account extends AccountNumber
 
         $this->raw = $account;
         $this->encPubKey = new EncodedPublicKey($account['enc_pubkey']);
-        $this->balance = new PascalCurrency((string) $account['balance']);
+        $this->balance = new PascalCoinCurrency((string) $account['balance']);
         $this->nOperation = (int) $account['n_operation'];
         $this->updatedB = (int) $account['updated_b'];
 
-        if (!\in_array($account['state'], self::STATES, true)) {
+        if (!\in_array($account['state'], PascalCoin::STATES, true)) {
             throw new \InvalidArgumentException('Invalid account state.');
         }
         $this->state = $account['state'];
@@ -147,8 +148,8 @@ class Account extends AccountNumber
         }
 
         $this->privateSale = false;
-        if ($account['state'] === self::STATE_LISTED) {
-            $this->price = PascalCurrency::fromMolinas($account['price']);
+        if ($account['state'] === PascalCoin::STATE_LISTED) {
+            $this->price = new PascalCoinCurrency($account['price']);
             $this->sellerAccount = new AccountNumber($account['seller_account']);
             $this->privateSale = (bool) $account['private_sale'];
             if ($this->privateSale === true) {

@@ -13,16 +13,26 @@ declare(strict_types=1);
 
 namespace Techworker\PascalCoin\RichApi;
 
+use Techworker\PascalCoin\Type\Status;
+
 /**
  * Interface NodeApiInterface.
  */
 interface NodeApiInterface
 {
     /**
+     * Gets the status of the node.
+     *
+     * @throws \Techworker\PascalCoin\RPC\ConnectionException
+     * @throws \Techworker\PascalCoin\RPC\ErrorException
+     * @return Status
+     */
+    public function status() : Status;
+
+    /**
      * Adds one or more nodes to connect.
      *
      * @param string ...$nodes
-     *
      * @throws \Techworker\PascalCoin\RPC\ConnectionException
      * @throws \Techworker\PascalCoin\RPC\ErrorException
      *
@@ -64,5 +74,5 @@ interface NodeApiInterface
      * @throws \Techworker\PascalCoin\RPC\ErrorException
      * @return array
      */
-    public function connections(): array;
+    public function listConnections(): array;
 }

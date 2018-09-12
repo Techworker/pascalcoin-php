@@ -17,47 +17,68 @@ use Techworker\PascalCoin\RichApi\AccountApiInterface;
 use Techworker\PascalCoin\RichApi\NodeApiInterface;
 use Techworker\PascalCoin\RichApi\WalletApiInterface;
 
+/**
+ * Class RichApi
+ */
 class RichApi implements RichApiInterface
 {
-    use HasEndpointsTrait;
-
+    /**
+     * The node api
+     *
+     * @var NodeApiInterface
+     */
     protected $nodeApi;
+
+    /**
+     * The api with methods for the wallet.
+     *
+     * @var WalletApiInterface
+     */
     protected $walletApi;
+
+    /**
+     * The api for account related functions.
+     *
+     * @var AccountApiInterface
+     */
     protected $accountApi;
 
-    public function __construct(NodeApiInterface $nodeApi, WalletApiInterface $walletApi, AccountApiInterface $accountApi)
+    /**
+     * RichApi constructor.
+     *
+     * @param NodeApiInterface $nodeApi
+     * @param WalletApiInterface $walletApi
+     * @param AccountApiInterface $accountApi
+     */
+    public function __construct(NodeApiInterface $nodeApi,
+                                WalletApiInterface $walletApi,
+                                AccountApiInterface $accountApi
+    )
     {
         $this->nodeApi = $nodeApi;
         $this->walletApi = $walletApi;
         $this->accountApi = $accountApi;
     }
 
-    public function node(EndPoint ...$endPoints): NodeApiInterface
+    /**
+     * Gets the current node instance with either the new endpoints or the given
+     * endpoints.
+     *
+     * @return NodeApiInterface
+     */
+    public function node(): NodeApiInterface
     {
-        if (count($endPoints) === 0) {
-            $endPoints = $this->endPoints;
-        }
-
-        return $this->nodeApi->setEndpoints(...$endPoints);
+        return $this->nodeApi;
     }
 
 
-    public function wallet(EndPoint ...$endPoints): WalletApiInterface
+    public function wallet(): WalletApiInterface
     {
-        if (count($endPoints) === 0) {
-            $endPoints = $this->endPoints;
-        }
-
-        return $this->walletApi->setEndpoints(...$endPoints);
+        return $this->walletApi;
     }
 
-    public function account(EndPoint ...$endPoints): AccountApiInterface
+    public function account(): AccountApiInterface
     {
-        if (count($endPoints) === 0) {
-            $endPoints = $this->endPoints;
-        }
-
-        $this->accountApi->setEndpoints(...$endPoints);
         return $this->accountApi;
     }
 }

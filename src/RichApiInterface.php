@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace Techworker\PascalCoin;
 
+use Techworker\PascalCoin\RichApi\AccountApiInterface;
 use Techworker\PascalCoin\RichApi\NodeApiInterface;
+use Techworker\PascalCoin\RichApi\WalletApiInterface;
 
 /**
  * Interface PascalCoinRPCInterface.
@@ -23,4 +25,6 @@ use Techworker\PascalCoin\RichApi\NodeApiInterface;
 interface RichApiInterface
 {
     public function node(): NodeApiInterface;
+    public function account(): AccountApiInterface;
+    public function wallet(): WalletApiInterface;
 }

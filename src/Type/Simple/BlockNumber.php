@@ -19,7 +19,7 @@ declare(strict_types=1);
 
 namespace Techworker\PascalCoin\Type\Simple;
 
-use Techworker\PascalCoin\RpcValueInterface;
+use Techworker\PascalCoin\Type\RpcValueInterface;
 
 /**
  * Class BlockNumber.
