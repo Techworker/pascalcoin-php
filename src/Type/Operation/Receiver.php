@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Techworker\PascalCoin\Type\Operation;
 
+use Techworker\CryptoCurrency\Currencies\PascalCoin as PascalCoinCurrency;
 use Techworker\PascalCoin\Type\Simple\AccountNumber;
-use Techworker\PascalCoin\Type\Simple\PascalCurrency;
 
 /**
  * Class Sender.
@@ -27,7 +27,7 @@ class Receiver
     protected $account;
 
     /**
-     * @var PascalCurrency
+     * @var PascalCoinCurrency
      */
     protected $amount;
 
@@ -52,7 +52,7 @@ class Receiver
     {
         $this->raw = $receiver;
         $this->account = new AccountNumber($receiver['account']);
-        $this->amount = new PascalCurrency($receiver['amount']);
+        $this->amount = new PascalCoinCurrency($receiver['amount']);
         $this->payload = (string) $receiver['amount'];
     }
 
@@ -65,9 +65,9 @@ class Receiver
     }
 
     /**
-     * @return PascalCurrency
+     * @return PascalCoinCurrency
      */
-    public function getAmount(): PascalCurrency
+    public function getAmount(): PascalCoinCurrency
     {
         return $this->amount;
     }

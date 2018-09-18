@@ -149,7 +149,7 @@ class Account extends AccountNumber
 
         $this->privateSale = false;
         if ($account['state'] === PascalCoin::STATE_LISTED) {
-            $this->price = new PascalCoinCurrency($account['price']);
+            $this->price = new PascalCoinCurrency($account['price'], PascalCoinCurrency::MOLINA);
             $this->sellerAccount = new AccountNumber($account['seller_account']);
             $this->privateSale = (bool) $account['private_sale'];
             if ($this->privateSale === true) {
@@ -176,9 +176,9 @@ class Account extends AccountNumber
     /**
      * Gets the balance of the account.
      *
-     * @return PascalCurrency
+     * @return PascalCoinCurrency
      */
-    public function getBalance(): PascalCurrency
+    public function getBalance(): PascalCoinCurrency
     {
         return $this->balance;
     }
@@ -220,7 +220,7 @@ class Account extends AccountNumber
      */
     public function isListed(): bool
     {
-        return $this->state === self::STATE_LISTED;
+        return $this->state === PascalCoin::STATE_LISTED;
     }
 
     /**
@@ -236,9 +236,9 @@ class Account extends AccountNumber
     /**
      * Gets the price of the account in case it is listed.
      *
-     * @return PascalCurrency|null
+     * @return PascalCoinCurrency|null
      */
-    public function getPrice(): ?PascalCurrency
+    public function getPrice(): ?PascalCoinCurrency
     {
         return $this->price;
     }

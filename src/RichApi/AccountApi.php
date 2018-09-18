@@ -15,4 +15,10 @@ class AccountApi extends AbstractRichApi implements AccountApiInterface
 
         return new Account($data);
     }
+
+    public function paged(int $limit, int $offset): array
+    {
+        $data = $this->rawApi->findAccounts(null, null, null, null, null, null, $offset, $limit);
+        return $this->arrayToInstanceArray($data, Account::class);
+    }
 }

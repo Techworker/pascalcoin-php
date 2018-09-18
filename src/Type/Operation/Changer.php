@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Techworker\PascalCoin\Type\Operation;
 
+use Techworker\CryptoCurrency\Currencies\PascalCoin as PascalCoinCurrency;
 use Techworker\PascalCoin\Type\Simple\AccountNumber;
 use Techworker\PascalCoin\Type\Simple\HexaString;
-use Techworker\PascalCoin\Type\Simple\PascalCurrency;
 
 /**
  * Class Sender.
@@ -67,7 +67,7 @@ class Changer
     /**
      * The price of the account.
      *
-     * @var PascalCurrency
+     * @var PascalCoinCurrency
      */
     protected $accountPrice;
 
@@ -81,7 +81,7 @@ class Changer
     /**
      * The fee.
      *
-     * @var PascalCurrency
+     * @var PascalCoinCurrency
      */
     protected $fee;
 
@@ -123,7 +123,7 @@ class Changer
         }
 
         if (isset($changer['account_price'])) {
-            $this->accountPrice = new PascalCurrency($changer['account_price']);
+            $this->accountPrice = new PascalCoinCurrency($changer['account_price']);
         }
 
         if (isset($changer['locked_until_block'])) {
@@ -131,7 +131,7 @@ class Changer
         }
 
         if (isset($changer['fee'])) {
-            $this->fee = new PascalCurrency($changer['fee']);
+            $this->fee = new PascalCoinCurrency($changer['fee']);
         }
     }
 
@@ -184,9 +184,9 @@ class Changer
     }
 
     /**
-     * @return PascalCurrency
+     * @return PascalCoinCurrency
      */
-    public function getAccountPrice(): PascalCurrency
+    public function getAccountPrice(): PascalCoinCurrency
     {
         return $this->accountPrice;
     }
@@ -200,9 +200,9 @@ class Changer
     }
 
     /**
-     * @return PascalCurrency
+     * @return PascalCoinCurrency
      */
-    public function getFee(): ?PascalCurrency
+    public function getFee(): ?PascalCoinCurrency
     {
         return $this->fee;
     }

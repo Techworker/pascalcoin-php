@@ -34,12 +34,20 @@ class Curl extends AbstractRPCClient
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($rpc));
 
-            $result = curl_exec($ch);
-            if ($result === false) {
-                throw new ConnectionException('Unable to connect to '.$endPoint);
+            try {
+                $result = curl_exec($ch);
+                if ($result === false) {
+                    throw new ConnectionException('Unable to connect to '.$endPoint);
+                }
+                return $result;
+            }
+            catch(\Exception $ex) {
+                throw new ConnectionException('Connection problem: '.$endPoint);
+            }
+            finally {
+                \curl_close($ch);
             }
 
-            return $result;
         } catch (\Exception $ex) {
             print_r($ex);
         }

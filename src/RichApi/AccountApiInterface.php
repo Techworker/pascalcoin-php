@@ -16,4 +16,6 @@ interface AccountApiInterface
      * @return null|Account
      */
     public function find($account) : ?Account;
+
+    public function paged(int $limit, int $offset) : array;
 }

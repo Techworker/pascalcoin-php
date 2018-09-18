@@ -219,17 +219,17 @@ class RawApi implements RawApiInterface
     /**
      * {@inheritdoc}
      */
-    public function getBlocks(int $last = 0,
-                              int $start = 0,
-                              int $end = 0,
-                              int $max = 0): array
+    public function getBlocks(?int $last = 0,
+                              ?int $start = 0,
+                              ?int $end = 0,
+                              ?int $max = 0): array
     {
-        return $this->send('getblocks', [
+        return $this->send('getblocks', array_filter([
             'last' => $last,
             'start' => $start,
             'end' => $end,
             'max' => $max,
-        ]);
+        ]));
     }
 
     /**
@@ -367,25 +367,26 @@ class RawApi implements RawApiInterface
     /**
      * {@inheritdoc}
      */
-    public function findAccounts(string $name = '',
-                                 int $type = -1,
-                                 bool $listed = false,
-                                 bool $exact = true,
-                                 string $minBalance = '-1',
-                                 string $maxBalance = '-1',
-                                 int $start = 0,
-                                 int $max = 100): array
+    public function findAccounts(?string $name,
+                                 ?int $type,
+                                 ?bool $listed,
+                                 ?bool $exact,
+                                 ?string $minBalance,
+                                 ?string $maxBalance,
+                                 ?int $start,
+                                 ?int $max): array
     {
-        return $this->send('findaccounts', [
-            'name' => $name,
-            'type' => $type,
-            'listed' => $listed,
-            'exact' => $exact,
-            'min_balance' => $minBalance,
-            'max_balance' => $maxBalance,
-            'start' => $start,
-            'max' => $max,
-        ]);
+        $params = [];
+        if($name !== null) $params['name'] = $name;
+        if($type !== null) $params['type'] = $type;
+        if($listed !== null) $params['listed'] = $listed;
+        if($exact !== null) $params['exact'] = $exact;
+        if($minBalance !== null) $params['min_balance'] = $minBalance;
+        if($maxBalance !== null) $params['max_balance'] = $maxBalance;
+        if($start !== null) $params['start'] = $start;
+        if($max !== null) $params['max'] = $max;
+
+        return $this->send('findaccounts', $params);
     }
 
     /**

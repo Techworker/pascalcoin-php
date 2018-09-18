@@ -181,10 +181,10 @@ interface RawApiInterface
      * @return array
      */
     public function getBlocks(
-        int $last = 0,
-        int $start = 0,
-        int $end = 0,
-        int $max = 0
+        ?int $last = 0,
+        ?int $start = 0,
+        ?int $end = 0,
+        ?int $max = 0
     ): array;
 
     /**
@@ -370,14 +370,14 @@ interface RawApiInterface
      * @return array
      */
     public function findAccounts(
-        string $name = '',
-        int $type = -1,
-        bool $listed = false,
-        bool $exact = true,
-        string $minBalance = '-1',
-        string $maxBalance = '-1',
-        int $start = 0,
-        int $max = 100
+        ?string $name,
+        ?int $type,
+        ?bool $listed,
+        ?bool $exact,
+        ?string $minBalance,
+        ?string $maxBalance,
+        ?int $start,
+        ?int $max
     ): array;
 
     /**

@@ -19,13 +19,14 @@ declare(strict_types=1);
 
 namespace Techworker\PascalCoin\Type;
 
+use Techworker\CryptoCurrency\Currencies\PascalCoin as PascalCoinCurrency;
+use Techworker\PascalCoin\PascalCoin;
 use Techworker\PascalCoin\Type\Operation\Changer;
 use Techworker\PascalCoin\Type\Operation\Receiver;
 use Techworker\PascalCoin\Type\Operation\Sender;
 use Techworker\PascalCoin\Type\Simple\AccountNumber;
 use Techworker\PascalCoin\Type\Simple\BlockNumber;
 use Techworker\PascalCoin\Type\Simple\OperationHash;
-use Techworker\PascalCoin\Type\Simple\PascalCurrency;
 
 /**
  * Class Operation.
@@ -94,17 +95,17 @@ class Operation extends OperationHash
     protected $opTxt;
 
     /**
-     * @var PascalCurrency
+     * @var PascalCoinCurrency
      */
     protected $amount;
 
     /**
-     * @var PascalCurrency
+     * @var PascalCoinCurrency
      */
     protected $fee;
 
     /**
-     * @var PascalCurrency
+     * @var PascalCoinCurrency
      */
     protected $balance;
 
@@ -166,30 +167,30 @@ class Operation extends OperationHash
         $this->opBlock = (int) $operation['opblock'];
         $this->maturation = (int) $operation['maturation'];
 
-        if (!\in_array($operation['optype'], self::OPTYPES, true)) {
+        if (!\in_array($operation['optype'], PascalCoin::OP_TYPES, true)) {
             throw new \InvalidArgumentException('Invalid optype');
         }
 
         $this->opType = (int) $operation['optype'];
 
-        if (self::OP_TYPE_MULTI !== $this->opType) {
+        if (PascalCoin::OP_TYPE_MULTI !== $this->opType) {
             $this->account = new AccountNumber($operation['account']);
         }
 
         $this->opTxt = (string) $operation['optxt'];
-        if ($this->opType === self::OP_TYPE_TRANSACTION) {
-            $this->amount = new PascalCurrency((string) $operation['amount']);
+        if ($this->opType === PascalCoin::OP_TYPE_TRANSACTION) {
+            $this->amount = new PascalCoinCurrency((string) $operation['amount']);
         }
 
-        $this->fee = new PascalCurrency((string) $operation['fee']);
+        $this->fee = new PascalCoinCurrency((string) $operation['fee']);
 
         if (isset($operation['balance'])) {
-            $this->balance = new PascalCurrency((string) $operation['balance']);
+            $this->balance = new PascalCoinCurrency((string) $operation['balance']);
         }
 
         $this->subType = (string) $operation['subtype'];
 
-        if (self::OP_TYPE_MULTI !== $this->opType) {
+        if (PascalCoin::OP_TYPE_MULTI !== $this->opType) {
             $this->signerAccount = new AccountNumber($operation['signer_account']);
         }
 
@@ -291,25 +292,25 @@ class Operation extends OperationHash
     }
 
     /**
-     * @return PascalCurrency
+     * @return PascalCoinCurrency
      */
-    public function getAmount(): PascalCurrency
+    public function getAmount(): PascalCoinCurrency
     {
         return $this->amount;
     }
 
     /**
-     * @return PascalCurrency
+     * @return PascalCoinCurrency
      */
-    public function getFee(): PascalCurrency
+    public function getFee(): PascalCoinCurrency
     {
         return $this->fee;
     }
 
     /**
-     * @return PascalCurrency
+     * @return PascalCoinCurrency
      */
-    public function getBalance(): PascalCurrency
+    public function getBalance(): PascalCoinCurrency
     {
         return $this->balance;
     }

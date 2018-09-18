@@ -13,13 +13,20 @@ declare(strict_types=1);
 
 namespace Techworker\PascalCoin\RichApi;
 
+use App\Block;
 use Techworker\PascalCoin\RawApiInterface;
 use Techworker\PascalCoin\Type\Account;
 use Techworker\PascalCoin\Type\PublicKey;
 use Techworker\PascalCoin\Type\Simple\AccountNumber;
+use Techworker\PascalCoin\Type\Simple\BlockNumber;
 use Techworker\PascalCoin\Type\Simple\EncodedPublicKey;
 use Techworker\PascalCoin\Type\Simple\PublicKeyInterface;
 
+/**
+ * Class AbstractRichApi
+ *
+ * Basic implementation for a rich api.
+ */
 abstract class AbstractRichApi
 {
     /**
@@ -77,5 +84,36 @@ abstract class AbstractRichApi
         }
 
         return $accountNumber;
+    }
+
+    /**
+     * Extracts the block number from the given parameter.
+     *
+     * @param int|Block|BlockNumber $block
+     * @throws \InvalidArgumentException
+     * @return int
+     */
+    protected function getBlockValue($block) : int {
+
+        if(\is_int($block)) {
+            $blockNumber = $block;
+        } else if($block instanceof BlockNumber) {
+            $blockNumber = $block->getValue();
+        } else if($block instanceof \Techworker\PascalCoin\Type\Block) {
+            $blockNumber = $block->getValue();
+        } else {
+            throw new \InvalidArgumentException('Invalid block given: ' . $block);
+        }
+
+        return $blockNumber;
+    }
+
+    protected function arrayToInstanceArray(array $data, string $cls) {
+        $result = [];
+        foreach ($data as $datum) {
+            $result[] = new $cls($datum);
+        }
+
+        return $result;
     }
 }

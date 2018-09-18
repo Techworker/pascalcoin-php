@@ -13,6 +13,11 @@ declare(strict_types=1);
 
 namespace Techworker\PascalCoin;
 
+use Techworker\PascalCoin\RichApi\AccountApiInterface;
+use Techworker\PascalCoin\RichApi\BlockApiInterface;
+use Techworker\PascalCoin\RichApi\NodeApiInterface;
+use Techworker\PascalCoin\RichApi\WalletApiInterface;
+
 /**
  * Class PascalCoin.
  *
@@ -120,22 +125,52 @@ class PascalCoin
     private $rawApi;
 
     /**
-     * Rich api instance.
+     * The node api
      *
-     * @var RichApiInterface
+     * @var NodeApiInterface
      */
-    private $richApi;
+    protected $nodeApi;
+
+    /**
+     * The api with methods for the wallet.
+     *
+     * @var WalletApiInterface
+     */
+    protected $walletApi;
+
+    /**
+     * The api for account related functions.
+     *
+     * @var AccountApiInterface
+     */
+    protected $accountApi;
+
+    /**
+     * The api for block related methods.
+     *
+     * @var BlockApiInterface
+     */
+    protected $blockApi;
 
     /**
      * PascalCoin constructor.
-     *
      * @param RawApiInterface $rawApi
-     * @param RichApiInterface $richApi
+     * @param NodeApiInterface $nodeApi
+     * @param WalletApiInterface $walletApi
+     * @param AccountApiInterface $accountApi
+     * @param BlockApiInterface $blockApi
      */
-    public function __construct(RawApiInterface $rawApi, RichApiInterface $richApi)
+    public function __construct(RawApiInterface $rawApi,
+                                NodeApiInterface $nodeApi,
+                                WalletApiInterface $walletApi,
+                                AccountApiInterface $accountApi,
+                                BlockApiInterface $blockApi)
     {
         $this->rawApi = $rawApi;
-        $this->richApi = $richApi;
+        $this->nodeApi = $nodeApi;
+        $this->walletApi = $walletApi;
+        $this->accountApi = $accountApi;
+        $this->blockApi = $blockApi;
     }
 
     /**
@@ -143,18 +178,40 @@ class PascalCoin
      *
      * @return RawApiInterface
      */
-    public function getRawApi(): RawApiInterface
+    public function raw(): RawApiInterface
     {
         return $this->rawApi;
     }
 
     /**
-     * Gets the rich API implementation.
-     *
-     * @return RichApiInterface
+     * @return NodeApiInterface
      */
-    public function getRichApi(): RichApiInterface
+    public function node(): NodeApiInterface
     {
-        return $this->richApi;
+        return $this->nodeApi;
+    }
+
+    /**
+     * @return WalletApiInterface
+     */
+    public function wallet(): WalletApiInterface
+    {
+        return $this->walletApi;
+    }
+
+    /**
+     * @return AccountApiInterface
+     */
+    public function accounts(): AccountApiInterface
+    {
+        return $this->accountApi;
+    }
+
+    /**
+     * @return BlockApiInterface
+     */
+    public function blocks(): BlockApiInterface
+    {
+        return $this->blockApi;
     }
 }

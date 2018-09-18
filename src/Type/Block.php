@@ -19,11 +19,11 @@ declare(strict_types=1);
 
 namespace Techworker\PascalCoin\Type;
 
+use Techworker\CryptoCurrency\Currencies\PascalCoin as PascalCoinCurrency;
 use Techworker\PascalCoin\Type\Simple\AccountNumber;
 use Techworker\PascalCoin\Type\Simple\BlockNumber;
 use Techworker\PascalCoin\Type\Simple\EncodedPublicKey;
 use Techworker\PascalCoin\Type\Simple\HexaString;
-use Techworker\PascalCoin\Type\Simple\PascalCurrency;
 
 /**
  * Class Block.
@@ -42,14 +42,14 @@ class Block extends BlockNumber
     /**
      * Reward paid to the first account created with the block.
      *
-     * @var PascalCurrency
+     * @var PascalCoinCurrency
      */
     protected $reward;
 
     /**
      * Accumulated fee of all operations.
      *
-     * @var PascalCurrency
+     * @var PascalCoinCurrency
      */
     protected $fee;
 
@@ -161,8 +161,8 @@ class Block extends BlockNumber
         parent::__construct((int) $block['block']);
 
         $this->encPubKey = new EncodedPublicKey($block['enc_pubkey']);
-        $this->reward = new PascalCurrency((string) $block['reward']);
-        $this->fee = new PascalCurrency((string) $block['fee']);
+        $this->reward = new PascalCoinCurrency((string) $block['reward']);
+        $this->fee = new PascalCoinCurrency((string) $block['fee']);
         $this->ver = (int) $block['ver'];
         $this->verA = (int) $block['ver_a'];
         $this->timestamp = (int) $block['timestamp'];
@@ -188,11 +188,11 @@ class Block extends BlockNumber
     /**
      * Gets the block number.
      *
-     * @return BlockNumber
+     * @return int
      */
-    public function getBlock(): BlockNumber
+    public function getBlock(): int
     {
-        return $this;
+        return $this->block;
     }
 
     /**
@@ -208,9 +208,9 @@ class Block extends BlockNumber
     /**
      * Gets the reward paid to the first account.
      *
-     * @return PascalCurrency
+     * @return PascalCoinCurrency
      */
-    public function getReward(): PascalCurrency
+    public function getReward(): PascalCoinCurrency
     {
         return $this->reward;
     }
@@ -218,9 +218,9 @@ class Block extends BlockNumber
     /**
      * Gets the accumulated fee.
      *
-     * @return PascalCurrency
+     * @return PascalCoinCurrency
      */
-    public function getFee(): PascalCurrency
+    public function getFee(): PascalCoinCurrency
     {
         return $this->fee;
     }
