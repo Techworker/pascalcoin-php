@@ -16,6 +16,7 @@ namespace Techworker\PascalCoin;
 use Techworker\PascalCoin\RichApi\AccountApiInterface;
 use Techworker\PascalCoin\RichApi\BlockApiInterface;
 use Techworker\PascalCoin\RichApi\NodeApiInterface;
+use Techworker\PascalCoin\RichApi\OperationsApiInterface;
 use Techworker\PascalCoin\RichApi\WalletApiInterface;
 
 /**
@@ -153,24 +154,35 @@ class PascalCoin
     protected $blockApi;
 
     /**
+     * The api for operation related methods.
+     *
+     * @var OperationsApiInterface
+     */
+    protected $operationsApi;
+
+    /**
      * PascalCoin constructor.
+     *
      * @param RawApiInterface $rawApi
      * @param NodeApiInterface $nodeApi
      * @param WalletApiInterface $walletApi
      * @param AccountApiInterface $accountApi
      * @param BlockApiInterface $blockApi
+     * @param OperationsApiInterface $operationsApi
      */
     public function __construct(RawApiInterface $rawApi,
                                 NodeApiInterface $nodeApi,
                                 WalletApiInterface $walletApi,
                                 AccountApiInterface $accountApi,
-                                BlockApiInterface $blockApi)
+                                BlockApiInterface $blockApi,
+                                OperationsApiInterface $operationsApi)
     {
         $this->rawApi = $rawApi;
         $this->nodeApi = $nodeApi;
         $this->walletApi = $walletApi;
         $this->accountApi = $accountApi;
         $this->blockApi = $blockApi;
+        $this->operationsApi = $operationsApi;
     }
 
     /**
@@ -213,5 +225,10 @@ class PascalCoin
     public function blocks(): BlockApiInterface
     {
         return $this->blockApi;
+    }
+
+    public function operations(): OperationsApiInterface
+    {
+        return $this->operationsApi;
     }
 }

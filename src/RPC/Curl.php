@@ -49,7 +49,7 @@ class Curl extends AbstractRPCClient
             }
 
         } catch (\Exception $ex) {
-            print_r($ex);
+            die($ex->getMessage());
         }
     }
 }
